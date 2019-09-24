@@ -6,17 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class Ventana {
+public class Ventana extends JFrame {
 	
 	
 	public Ventana() {
-		JFrame ventana = new JFrame();
-		ventana.setTitle("Ventana");
-		ventana.setVisible(true);
-		ventana.setResizable(true);
-		ventana.setSize(500, 500);
-		ventana.setLocation(100, 100);
-		ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setTitle("Ventana");
+		this.setSize(500, 500);
+		this.setLocation(100, 100);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JButton boton = new JButton();
 		boton.setVisible(true);
 		boton.setSize(100, 100);
@@ -31,13 +28,15 @@ public class Ventana {
 				}
 			}
 		});
-		ventana.getContentPane().add(boton);
+		this.getContentPane().add(boton);
 		
 	}
 	
 	public static void main(String[] args) {
-		
-		
+		Ventana v = new Ventana();
+		v.setVisible(true);
+		v.setResizable(false);
+			
 	}
 	
 
