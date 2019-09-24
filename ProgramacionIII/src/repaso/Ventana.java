@@ -36,6 +36,7 @@ public class Ventana extends JFrame {
 		Ventana v = new Ventana();
 		v.setVisible(true);
 		v.setResizable(false);
+		System.out.println("Hola mundo");
 			
 	}
 	
