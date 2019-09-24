@@ -11,6 +11,7 @@ public class Ventana {
 	
 	public Ventana() {
 		JFrame ventana = new JFrame();
+		ventana.setTitle("Ventana");
 		ventana.setVisible(true);
 		ventana.setResizable(true);
 		ventana.setSize(500, 500);
@@ -35,7 +36,7 @@ public class Ventana {
 	}
 	
 	public static void main(String[] args) {
-		Ventana();
+		
 		
 	}
 	
