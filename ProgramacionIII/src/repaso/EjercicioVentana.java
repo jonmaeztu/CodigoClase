@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 
 public class EjercicioVentana extends JFrame {
 	
@@ -31,7 +32,7 @@ public class EjercicioVentana extends JFrame {
 		boton.setSize(100, 100);
 		boton.setLocation(100,100);
 		boton.addActionListener(new ActionListener() {
-			
+		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object o = e.getSource();
@@ -39,19 +40,19 @@ public class EjercicioVentana extends JFrame {
 					
 					@Override
 					public void run() {
-						if(o == boton) {
+						if(boton == o) {
 							while(contador <= MAX) {
 								try {
-									Thread.sleep(contador_hilo+100);
+									Thread.sleep(contador+20);
+									barra.setValue(contador);
 								}catch(Exception e1) {
 									
 								}
-								if(contador_hilo == 1000) {
-									contador+=20;						
-									barra.setBackground(Color.BLACK);
+												
+							
+							
 									
-									barra.setValue(contador);
-								}
+								
 							}
 							System.exit(0);
 						}
@@ -65,9 +66,10 @@ public class EjercicioVentana extends JFrame {
 		});
 		
 		JPanel panelContenidos = new JPanel();
-		
-		panelContenidos.add(boton);
+		 
 		panelContenidos.add(barra);
+
+		panelContenidos.add(boton);
 		
 		this.getContentPane().add(panelContenidos);
 	}
