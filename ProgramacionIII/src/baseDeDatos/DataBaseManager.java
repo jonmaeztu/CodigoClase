@@ -2,11 +2,14 @@ package baseDeDatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 public class DataBaseManager {
 	private  Connection con = null;
@@ -147,6 +150,7 @@ public class DataBaseManager {
 	}
 	
 	public void guardar(Usuario u) throws DBException {
+		 
 		try (Statement st = con.createStatement()){
 			String sql = "INSERT INTO usuario (id, nombre, apellido) VALUES (" + u.getId() + ", '" + u.getNombre() + "','" + u.getApellido() + "`)";
 			st.executeUpdate(sql);
@@ -157,6 +161,55 @@ public class DataBaseManager {
 		
 		
 	}
+//Con prepared Statement
+	public void guardarPST(Usuario u) throws DBException {
+		String sql = "INSERT INTO usuario (id, nombre, apellido) VALUES (?, ?, ?)"; //Las posiciones empiecan en 1
+		
+		try (PreparedStatement st = con.prepareStatement(sql)){
+			st.setInt(1, u.getId());
+			st.setString(2, u.getNombre());
+			st.setString(3, u.getApellido());
+			
+			st.executeUpdate(sql);
+			
+		}catch(SQLException e) {
+			throw new DBException("Error al insertar usuario", e);
+		}
+		
+		
+	}
+	
+	//VALE PARA EL LOGIN EN EL PROYECTO, SI NO OBTIENE EL USUARIO SALTA EL CATCH 
+	public  List<Usuario> obtenerUsuarioPST(String nombre, String apellido) throws DBException{
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		String sql = "SELECT id, nombre, apellido FROM usuario WHERE nombre=? AND apellido = ?";
+
+		try (PreparedStatement st = con.prepareStatement(sql)){
+			st.setString(1, nombre);
+			st.setString(2, apellido);
+			
+			
+			//SELECT id, nombre, apellido FROM usuario WHERE apellido = 'jimenez'
+			ResultSet rs =st.executeQuery();
+			while(rs.next()) {  //Si hay resultados de esta consulta
+				Usuario u = new Usuario();
+				u.setId(rs.getInt("id"));
+				u.setNombre(rs.getString("nombre"));
+				u.setApellido(rs.getString("apellido"));
+				usuarios.add(u);
+				
+				
+				
+			}
+			
+		}catch(SQLException e) {
+			throw new DBException("No se pudo obtener el usuario con apellido" + apellido, e);
+			
+		}
+		
+		return usuarios;
+	}
+	
 	
 	//SELECT login FROM usuario WHERE login='" + user + "' AND  password ='" + pass + "';
 	
